@@ -1,0 +1,13 @@
+[includeIf "gitdir:~/documents/school/**"]
+  path = ~/.git/.gitcomfig-epfl
+
+[includeIf "gitdir:!~/documents/school/**"]
+  path = ~/.git/.gitconfig-personal
+
+[user]
+  email = noaemien@gmail.com
+  name = Noa Ette
+[init]
+  defaultBranch = main
+[rerere]
+  enabled = true
