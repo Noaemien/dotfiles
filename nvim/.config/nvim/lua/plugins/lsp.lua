@@ -54,7 +54,20 @@ return {
     config = function()
       require("lspconfig").lua_ls.setup {}
       require("lspconfig").pyright.setup {}
-      require("lspconfig").html.setup {}
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+      require("lspconfig").html.setup {
+        capabilities = capabilities,
+        filetypes = { "html", "blade" },
+        init_options = {
+          configurationSection = { "html", "css", "javascript" },
+          embeddedLanguages = {
+            css = true,
+            javascript = true
+          },
+          provideFormatter = true
+        }
+      };
       require("lspconfig").texlab.setup {}
       require("lspconfig").zls.setup {}
       require("lspconfig").marksman.setup {}
@@ -63,6 +76,8 @@ return {
       require("lspconfig").denols.setup {}
       require("lspconfig").cssls.setup {}
       require("lspconfig").jsonls.setup {}
+      require("lspconfig").phpactor.setup {}
+
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
