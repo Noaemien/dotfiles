@@ -1,8 +1,5 @@
 [includeIf "gitdir:~/documents/school/**"]
-  path = ~/.git/.gitconfig-epfl
-
-[includeIf "gitdir:!~/documents/school/**"]
-  path = ~/.git/.gitconfig-personal
+  path = ~/.config/git/gitconfig-epfl
 
 [user]
   email = noaemien@gmail.com

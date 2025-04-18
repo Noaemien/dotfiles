@@ -86,6 +86,7 @@ return {
       require("lspconfig").clangd.setup {}
       require("lspconfig").bashls.setup {}
       require("lspconfig").denols.setup {}
+      require("lspconfig").ts_ls.setup {}
       require("lspconfig").cssls.setup {}
       require("lspconfig").jsonls.setup {}
       require("lspconfig").phpactor.setup {}

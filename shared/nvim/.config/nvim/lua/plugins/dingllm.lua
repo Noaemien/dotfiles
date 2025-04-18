@@ -134,10 +134,20 @@ return {
         }, dingllm.make_anthropic_spec_curl_args, dingllm.handle_anthropic_spec_data)
       end
 
+      local function local_openai_replace()
+        dingllm.invoke_llm_and_stream_into_editor({
+          url = 'http://localhost:8003/v1/messages',
+          model = 'Qwen/Qwen2.5-Coder-32B-Instruct-AWQ',
+          system_prompt = system_prompt,
+          replace = true,
+        }, custom_make_openai_spec_curl_args(), dingllm.handle_openai_spec_data)
+      end
+
       vim.keymap.set({ 'n', 'v' }, '<leader>I', anthropic_help, { desc = 'llm anthropic_help' })
       vim.keymap.set({ 'n', 'v' }, '<leader>i', anthropic_replace, { desc = 'llm anthropic' })
       vim.keymap.set({ 'n', 'v' }, '<leader>d', deepseek_replace, { desc = 'llm deepseek' })
       vim.keymap.set({ 'n', 'v' }, '<leader>D', deepseek_help, { desc = 'llm deepseek_help' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>q', local_openai_replace, { desc = 'llm qwen local' })
     end,
   },
 }

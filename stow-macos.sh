@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Check if ./linux directory exists
+# Check if ./macos directory exists
 if [ ! -d "./macos" ]; then
     echo "Error: ./macos directory not found"
     exit 1

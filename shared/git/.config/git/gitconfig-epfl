@@ -1,0 +1,10 @@
+[user]
+  email = noa.ette@epfl.ch
+  name = Noa Ette
+
+[url "git@epfl-github:"]
+  insteadOf = "git@github.com:"
+
+[url "git@epfl-gitlab:"]
+  insteadOf = "git@gitlab.epfl.ch:"
+

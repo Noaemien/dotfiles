@@ -31,8 +31,8 @@ super + m
 	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+# super + y
+# 	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest window
 super + g
@@ -63,8 +63,8 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local.!hidden.window
+# super + {_,shift + }c
+# 	bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
@@ -84,6 +84,17 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop --focus,node --to-desktop} '{I,II,III,IV,V,VI,VII,VIII,IX,X}'
 
+super + a
+  bspc desktop --focus 'I'
+
+super + x
+  bspc desktop --focus 'II'
+
+super + c
+  bspc desktop --focus 'III'
+
+super + v
+  bspc desktop --focus 'IV'
 #
 # preselect
 #
