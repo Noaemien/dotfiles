@@ -46,6 +46,7 @@ export VISUAL=nvim
 export EDITOR=nvim
 export RANGER_LOAD_DEFAULT_RC=FALSE
 
+export PATH="~/scripts:$PATH"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!

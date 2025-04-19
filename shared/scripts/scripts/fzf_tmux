@@ -1,0 +1,26 @@
+#!/bin/bash
+
+walker_nav="dir,follow,hidden"
+skip=".local,.cache,.git,miniconda3,nodemodule,.config"
+root="/home/emien/"
+
+path=$(fzf --walker="$walker_nav" --walker-skip="$skip" --walker-root="$root" --tmux)
+name="$(basename "$path")"
+
+
+if [[ -n "$name" ]] ; then
+  tmux has-session -t "$name" 2>/dev/null
+
+  # If session doesnt exit
+  if [[ $? -ne 0 ]] ; then
+    tmux new-session -s "$name" -d -c "$path"
+  fi
+
+  # If in tmux
+  if [[ -n "$TMUX" ]] ; then
+    tmux switch-client -t "$name"
+  else
+    tmux attach-session -t "$name"
+  fi
+fi
+

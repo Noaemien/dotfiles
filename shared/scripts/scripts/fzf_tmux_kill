@@ -1,0 +1,7 @@
+#!/bin/bash
+session_name=`tmux list-sessions -F "#{session_name}" | fzf --tmux`
+
+if [[ -n $session_name ]] ; then
+  tmux kill-session -t "$session_name"
+  echo "Killed session $session_name"
+fi
