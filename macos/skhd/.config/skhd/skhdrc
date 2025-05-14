@@ -77,7 +77,7 @@
 # ############################################################### #
 
 # terminal emulator
-alt - return : kitty
+alt - return : open -na ghostty --args -e tmux -e s
 
 # make skhd reload its config
 alt - escape : skhd --restart-service
