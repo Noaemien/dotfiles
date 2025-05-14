@@ -1,0 +1,14 @@
+#!/bin/bash
+session_names=`tmux list-sessions -F "#{session_name}"`
+
+for session in $session_names; do
+if [[ $session =~ ^[0-9]+$ ]]; then
+        tmux kill-session -t "$session"
+        echo "Killed session: $session"
+    fi
+done
+
+# if [[ -n $session_name ]] ; then
+#   tmux kill-session -t "$session_name"
+#   echo "Killed session $session_name"
+# fi
