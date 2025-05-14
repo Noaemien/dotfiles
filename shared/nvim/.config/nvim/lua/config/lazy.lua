@@ -31,8 +31,8 @@ require("lazy").setup({
 })
 
 -- TODO: Move these to right place
-vim.keymap.set('n', '<leader>t', ':tabnew | terminal<CR>', { noremap = true, silent = true })
-vim.keymap.set('t', '<C-e>', "<C-\\><C-n><C-w>h", { silent = true, noremap = true })
-
-
-vim.keymap.set('n', '<leader>cc', ':%y<CR>', { desc = 'Yank all lines' })
+-- vim.keymap.set('n', '<leader>t', ':tabnew | terminal<CR>', { noremap = true, silent = true })
+-- vim.keymap.set('t', '<C-e>', "<C-\\><C-n><C-w>h", { silent = true, noremap = true })
+--
+--
+-- vim.keymap.set('n', '<leader>cc', ':%y<CR>', { desc = 'Yank all lines' })
