@@ -1,10 +1,13 @@
 #!/bin/bash
+if [[ -e $1 ]] ; then
+  path=$1
+else
+  walker_nav="dir,follow,hidden"
+  skip="Library,Applications,.local,.cache,.git,miniconda3,node_modules,.config"
+  root=$HOME
 
-walker_nav="dir,follow,hidden"
-skip="Library,Applications,.local,.cache,.git,miniconda3,node_modules,.config"
-root=$HOME
-
-path=$(fzf --walker="$walker_nav" --walker-skip="$skip" --walker-root="$root" --tmux)
+  path=$(fzf --walker="$walker_nav" --walker-skip="$skip" --walker-root="$root" --tmux)
+fi
 name="$(basename "$path")"
 
 
