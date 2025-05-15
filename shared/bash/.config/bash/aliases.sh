@@ -11,6 +11,7 @@ alias top='gotop --nvidia'
 alias bspwm='startx /usr/bin/bspwm'
 
 alias v='nvim'
+alias r='ranger'
 alias s='fzf_tmux'
 alias sk='fzf_tmux_kill'
 alias sp='fzf_tmux_purge'
