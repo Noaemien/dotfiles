@@ -1,5 +1,9 @@
 {
   "c": "~/dotfiles",
   "d": "~/documents",
-  "h": "~"
+  "h": "~",
+  "dd": "~/documents/dev",
+  "p": "~/documents/school/project-companion",
+  "c": "~/documents/dev/cyberflop",
+  "b": "~/bin"
 }

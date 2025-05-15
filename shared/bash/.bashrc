@@ -37,7 +37,7 @@ prompt_command() {
     #     printf "Error in $HOME/.bashrc; not sourcing it\n" >&2
     # fi
     # ... but update the timestamp regardless
-    printf "File changed sourcing\n"
+    printf "Updating Folder Key Jumps\n"
     python /Users/emien/scripts/generateShortcuts.py
     source "$HOME/.bashrc"
     _shortcuts_timestamp=$(stat -L -f %m "$CONFIG_FOLDER/nav_folders.json")
