@@ -16,6 +16,7 @@ alias s='fzf_tmux'
 alias sk='fzf_tmux_kill'
 alias sp='fzf_tmux_purge'
 alias g='lazygit'
+alias go='cd $(fzf --walker=dir,follow,hidden --walker-skip=Library,Applications,.local,.cache,.git,miniconda3,node_modules,.vscode,.cargo)'
 
 
 
