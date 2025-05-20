@@ -1,0 +1,5 @@
+{
+  "b": "~/.bashrc",
+  "f": "~/dotfiles/shared/bash/.config/bash/nav_folders.json",
+  "c": "~/dotfiles/shared/bash/.config/bash/nav_config.json"
+}

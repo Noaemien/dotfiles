@@ -3,7 +3,8 @@
   "d": "~/documents",
   "h": "~",
   "dd": "~/documents/dev",
-  "p": "~/documents/school/project-companion",
-  "c": "~/documents/dev/cyberflop",
-  "b": "~/bin"
+  "ddp": "~/documents/school/project-companion",
+  "b": "~/bin",
+  "n": "~/dotfiles/shared/nvim/.config/nvim/lua/plugins/"
+
 }

@@ -38,7 +38,7 @@ prompt_command() {
     # fi
     # ... but update the timestamp regardless
     printf "Updating Folder Key Jumps\n"
-    python /Users/emien/scripts/generateShortcuts.py
+    python "$HOME/scripts/generateShortcuts.py"
     source "$HOME/.bashrc"
     _shortcuts_timestamp=$(stat -L -f %m "$CONFIG_FOLDER/nav_folders.json")
   fi
