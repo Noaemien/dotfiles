@@ -30,6 +30,8 @@ require("lazy").setup({
   },
 })
 
+vim.opt.number = true
+vim.opt.relativenumber = true
 -- TODO: Move these to right place
 -- vim.keymap.set('n', '<leader>t', ':tabnew | terminal<CR>', { noremap = true, silent = true })
 -- vim.keymap.set('t', '<C-e>', "<C-\\><C-n><C-w>h", { silent = true, noremap = true })
