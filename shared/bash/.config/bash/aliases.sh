@@ -5,6 +5,21 @@ mkcd ()
 	mkdir -p -- "$1" && cd -P -- "$1"
 }
 
+c ()
+{
+
+  if [[ -e $1 ]] ; then
+    path=$1
+  else
+    if [[ -e $ROOT ]] ; then
+      path=$ROOT
+    else
+      path=$HOME
+    fi
+  fi
+  cd $path 
+}
+
 alias ls='ls --color=auto -a'
 alias grep='grep --color=auto'
 alias top='gotop --nvidia'
@@ -17,6 +32,7 @@ alias sk='fzf_tmux_kill'
 alias sp='fzf_tmux_purge'
 alias g='lazygit'
 alias go='cd $(fzf --walker=dir,follow,hidden --walker-skip=Library,Applications,.local,.cache,.git,miniconda3,node_modules,.vscode,.cargo)'
+alias cd='c'
 
 
 
