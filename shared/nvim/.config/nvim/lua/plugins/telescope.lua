@@ -23,3 +23,4 @@ return {
       vim.keymap.set('n', '<leader>fs', builtin.git_status, { desc = 'Telescope git status' })
     end
   },
+}
