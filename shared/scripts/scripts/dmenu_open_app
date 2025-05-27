@@ -1,0 +1,10 @@
+#!/bin/bash
+
+os=$(uname -s)
+if [[ $os == "Darwin" ]]; then
+  ls /Applications/ /Applications/Utilities/ /System/Applications/ /System/Applications/Utilities/ | \
+    grep '\.app$' | \
+    sed 's/\.app$//g' | \
+    choose | \
+    xargs -I {} open -a "{}.app"
+fi
