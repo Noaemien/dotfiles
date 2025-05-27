@@ -68,6 +68,16 @@ automatically-unhide-macos-hidden-apps = false
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
 # Fallback value (if you omit the key): mode.main.binding = {}
+
+[[on-window-detected]]
+    if.app-id = 'com.mitchellh.ghostty'
+    run = 'move-node-to-workspace 1' 
+[[on-window-detected]]
+    if.app-id = 'app.zen-browser.zen'
+    run = 'move-node-to-workspace 2' 
+# [[on-window-detected]]
+#     run = 'move-node-to-workspace 3' 
+
 [mode.main.binding]
 
     # All possible keys:
@@ -152,6 +162,8 @@ automatically-unhide-macos-hidden-apps = false
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     # alt-shift-s = 'mode service'
+    alt-w = "close"
+    alt-enter = 'exec-and-forget open -na ghostty --args -e tmux attach'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
