@@ -10,13 +10,12 @@ else
 fi
 name="$(basename "$path")"
 
-
 if [[ -n "$name" ]] ; then
   tmux has-session -t "$name" 2>/dev/null
 
-  # If session doesnt exit
+  # If session doesn't exist
   if [[ $? -ne 0 ]] ; then
-    tmux new-session -s "$name" -d -c "$path"
+    tmux new-session -s "$name" -d -c "$path" -e ROOT=$path
   fi
 
   # If in tmux
@@ -26,4 +25,3 @@ if [[ -n "$name" ]] ; then
     tmux attach-session -t "$name"
   fi
 fi
-
