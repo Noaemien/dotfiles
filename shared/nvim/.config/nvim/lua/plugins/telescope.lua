@@ -23,12 +23,3 @@ return {
       vim.keymap.set('n', '<leader>fs', builtin.git_status, { desc = 'Telescope git status' })
     end
   },
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    init = function()
-      vim.keymap.set('n', '<leader>bc', ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-        { desc = 'Telescope browse current buf' })
-      vim.keymap.set('n', '<leader>br', ":Telescope file_browser<CR>", { desc = 'Telescope browse' })
-    end
-  }
-}
