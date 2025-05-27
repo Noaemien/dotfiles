@@ -1,5 +1,8 @@
 {
   "b": "~/.bashrc",
   "f": "~/dotfiles/shared/bash/.config/bash/nav_folders.json",
-  "c": "~/dotfiles/shared/bash/.config/bash/nav_config.json"
+  "c": "~/dotfiles/shared/bash/.config/bash/nav_config.json",
+  "a": "~/dotfiles/macos/aerospace/.config/aerospace/aerospace.toml",
+  "y": "~/dotfiles/macos/yabai/.config/yabai/yabairc",
+  "s": "~/dotfiles/macos/skhd/.config/skhd/skhdrc"
 }
