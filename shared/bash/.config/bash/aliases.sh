@@ -20,7 +20,18 @@ c ()
   cd $path 
 }
 
-alias ls='ls --color=auto -a'
+venv ()
+{
+  VENV_PATH="$HOME/documents/dev/venv"
+  [ -e $VENV_PATH ] || mkdir -p "$VENV_PATH"
+
+  [ $1 == '-l' ] && { ls -1 $VENV_PATH 2>/dev/null || echo "No virtual environments"; }
+  [ $1 == '-a' ] && { source "$VENV_PATH/$(venv -l | fzf)/bin/activate" 2>/dev/null || echo "Usage: venv -a <name>"; }
+  [ $1 == '-n' ] && { [ -n $2 ] && python -m venv "$VENV_PATH/$2" || echo "Usage: venv -n <name>"; }
+  [ $1 == '-d' ] && { deactivate || echo "Not in a virtual environments"; }
+}
+
+alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias top='gotop --nvidia'
 alias bspwm='startx /usr/bin/bspwm'
