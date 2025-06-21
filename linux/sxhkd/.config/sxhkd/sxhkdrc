@@ -14,10 +14,6 @@ super + @space
 super + Escape
 	pkill -USR1 -x sxhkd
 
-# fuzzy-find and open project
-super + o
-  fzf_tmux
-
 #
 # bspwm hotkeys
 #
@@ -47,8 +43,8 @@ super + {_,shift + }w
 #
 
 # set the window state
-super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+# super + {t,shift + t,s,f}
+# 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
 # super + ctrl + {m,x,y,z}
@@ -88,17 +84,9 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop --focus,node --to-desktop} '{I,II,III,IV,V,VI,VII,VIII,IX,X}'
 
-super + a
-  bspc desktop --focus 'I'
+super + {_,shift + }{a,s,d,f}
+  bspc {desktop --focus,node --to-desktop} '{I,II,III,IV}'
 
-super + x
-  bspc desktop --focus 'II'
-
-super + c
-  bspc desktop --focus 'III'
-
-super + v
-  bspc desktop --focus 'IV'
 #
 # preselect
 #
