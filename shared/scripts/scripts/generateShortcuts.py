@@ -16,7 +16,7 @@ for key,path in data.items():
   vim_buf += "vim.keymap.set({'n', 'v'}, '<leader>g" + key + "', ':e ' .. vim.fn.fnameescape('" + path +"') .. '<cr>')\n"
 
 # CONFIGS
-with open('/Users/emien/.config/bash/nav_config.json', 'r') as s:
+with open(os.environ.get("HOME", "/Users/emien") + '/.config/bash/nav_config.json', 'r') as s:
   data = json.load(s)
 
 for key,path in data.items():
@@ -26,11 +26,11 @@ for key,path in data.items():
 
 # SAVE TO FILES 
 
-with open('/Users/emien/.config/bash/shortcuts.sh', 'w+') as s:
+with open(os.environ.get("HOME", "/Users/emien") + '/.config/bash/shortcuts.sh', 'w+') as s:
   print(bash_buf, file=s)
 
-with open('/Users/emien/.config/ranger/shortcuts.conf', 'w+') as s:
+with open(os.environ.get("HOME", "/Users/emien") + '/.config/ranger/shortcuts.conf', 'w+') as s:
   print(ranger_buf, file=s)
 
-with open('/Users/emien/.config/nvim/lua/shortcuts.lua', 'w+') as s:
+with open(os.environ.get("HOME", "/Users/emien") + '/.config/nvim/lua/shortcuts.lua', 'w+') as s:
   print(vim_buf, file=s)

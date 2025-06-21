@@ -9,6 +9,12 @@ set -o vi
 CONFIG_FOLDER="$HOME/.config/bash"
 
 PS1="\[\e[0;32m\]\u@\h\[\e[0m\]: \[\e[0;34m\]\w \[\e[0m\]"
+os=$(uname -s)
+if [[ $os == "Darwin" ]]; then
+  STAT_CMD="stat -L -f %m "
+else
+  STAT_CMD="stat -L -c %Z "
+fi
 
 export VISUAL=nvim
 export EDITOR=nvim
@@ -19,6 +25,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="~/scripts:$PATH"
 
 # ALIASES
+python "$HOME/scripts/generateShortcuts.py"
 source "$CONFIG_FOLDER/aliases.sh"
 source "$CONFIG_FOLDER/shortcuts.sh"
 #PRIVATE CONFIGS AND KEYS
@@ -26,17 +33,17 @@ source ~/emien_api
 
 prompt_command() {
   # initialize the timestamp, if it isn't already
-  _nav_folders_timestamp=${_nav_folders_timestamp:-$(stat -L -f %m "$CONFIG_FOLDER/nav_folders.json")}
-  _nav_config_timestamp=${_nav_config_timestamp:-$(stat -L -f %m "$CONFIG_FOLDER/nav_config.json")}
+  _nav_folders_timestamp=${_nav_folders_timestamp:-$($STAT_CMD "$CONFIG_FOLDER/nav_folders.json")}
+  _nav_config_timestamp=${_nav_config_timestamp:-$($STAT_CMD "$CONFIG_FOLDER/nav_config.json")}
   # if it's been modified, test and load it
-  if [[ $(stat -L -f %m "$CONFIG_FOLDER/nav_folders.json") -gt $_nav_folders_timestamp || $(stat -L -f %m "$CONFIG_FOLDER/nav_config.json") -gt $_nav_config_timestamp ]];
+  if [[ $($STAT_CMD "$CONFIG_FOLDER/nav_folders.json") -gt $_nav_folders_timestamp || $($STAT_CMD "$CONFIG_FOLDER/nav_config.json") -gt $_nav_config_timestamp ]];
   then
     printf "Updating Folder Key Jumps\n"
     python "$HOME/scripts/generateShortcuts.py"
     source "$CONFIG_FOLDER/shortcuts.sh"
 
-    _nav_folders_timestamp=$(stat -L -f %m "$CONFIG_FOLDER/nav_folders.json")
-    _nav_config_timestamp=$(stat -L -f %m "$CONFIG_FOLDER/nav_config.json")
+    _nav_folders_timestamp=$($STAT_CMD "$CONFIG_FOLDER/nav_folders.json")
+    _nav_config_timestamp=$($STAT_CMD "$CONFIG_FOLDER/nav_config.json")
   fi
 }
 
