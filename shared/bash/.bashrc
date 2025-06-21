@@ -8,12 +8,13 @@ set -o vi
 
 CONFIG_FOLDER="$HOME/.config/bash"
 
-PS1="\[\e[0;32m\]\u\[\e[0m\]: \[\e[0;34m\]\w \[\e[0m\]"
+PS1="\[\e[0;32m\]\u@\h\[\e[0m\]: \[\e[0;34m\]\w \[\e[0m\]"
 
 export VISUAL=nvim
 export EDITOR=nvim
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export FZF_DEFAULT_OPTS="--multi --no-height --extended"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 export PATH="~/scripts:$PATH"
 
