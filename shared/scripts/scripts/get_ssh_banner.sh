@@ -33,14 +33,18 @@ echo "" >> "$BANNER_FILE"
 echo "Recent Caddy API Requests:" >> "$BANNER_FILE"
 # Extract recent Caddy requests from access.log
 if [ -s "/var/log/caddy/access.log" ]; then
-    # Use jq to parse valid JSON lines, skip invalid ones
-    cat /var/log/caddy/access.log | while read -r line; do
-        # Check if line is valid JSON and has required fields
-        if echo "$line" | jq -e '.request.remote_ip and .request.uri' >/dev/null 2>&1; then
-            echo "$line" | jq -r '. | "\(.ts | strftime("%b %d %H:%M:%S")) - \(.request.remote_ip) - \(.request.uri)"' >> "$BANNER_FILE"
-        fi
-    done | tail -n 5
+cat /var/log/caddy/access.log | jq '. | if (.status < 300) and (.status >= 200) and (.request.uri != "/") then {ip: .request.remote_ip, uri: .request.uri, ts: .ts} else null end // empty' -r | jq -r -s 'sort_by(-.ts) | unique_by(.ip, .uri) | sort_by(.ts)[] | "\(.ts | strftime("%b %d %H:%M:%S")), ip: \(.ip), uri: \(.uri)"' | tail -n 5 >> "$BANNER_FILE"
+#    # Use jq to parse valid JSON lines, skip invalid ones
+#    cat /var/log/caddy/access.log | while read -r line; do
+#        # Check if line is valid JSON and has required fields
+#        if echo "$line" | jq -e '.request.remote_ip and .request.uri' >/dev/null 2>&1; then
+#            echo "$line" | jq -r '. | "\(.ts | strftime("%b %d %H:%M:%S")) - \(.request.remote_ip) - \(.request.uri)"' >> "$BANNER_FILE"
+#        fi
+#    done | tail -n 5
 else
     echo "No Caddy logs found" >> "$BANNER_FILE"
 fi
+
+echo "\n" >> "$BANNER_FILE"
+
 chmod 644 "$BANNER_FILE"
