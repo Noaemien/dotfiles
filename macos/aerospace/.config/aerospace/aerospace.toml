@@ -163,7 +163,7 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     # alt-shift-s = 'mode service'
     alt-w = "close"
-    alt-enter = 'exec-and-forget open -na ghostty --args -e tmux attach'
+    alt-enter = "exec-and-forget open -na ghostty --args -e tmux new -As emien"
     alt-space = 'exec-and-forget ~/scripts/dmenu_open_app'
 
 # 'service' binding mode declaration.
