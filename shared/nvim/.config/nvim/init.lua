@@ -1,4 +1,5 @@
 require("config.lazy")
 require('shortcuts')
-require('lsp')
-require('autocmds')
+require('core.lsp')
+require('core.autocmds')
+require('core.config')

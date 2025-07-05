@@ -19,8 +19,6 @@ return {
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
       vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = 'Telescope old files' })
-      vim.keymap.set('n', '<leader>fc', builtin.git_commits, { desc = 'Telescope git commits' })
-      vim.keymap.set('n', '<leader>fs', builtin.git_status, { desc = 'Telescope git status' })
     end
   },
 }

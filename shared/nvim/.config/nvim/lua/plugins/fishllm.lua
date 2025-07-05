@@ -29,7 +29,7 @@ return {
         }, fishllm.openai_request_data, fishllm.handle_openai_spec_data)
       end
       -- show suggestions on idle
-      fishllm.set_cursor_hold_autocmd(invoke_qwen_local)
+      -- fishllm.set_cursor_hold_autocmd(invoke_qwen_local)
 
       vim.keymap.set({ 'n', 'v' }, '<leader>ac', fishllm.add_buf_to_context, { desc = "Add buffer to context" })
       vim.keymap.set({ 'n', 'v' }, '<leader>vc', fishllm.view_current_context, { desc = "View session context" })
