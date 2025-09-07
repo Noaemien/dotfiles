@@ -25,7 +25,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="~/scripts:$PATH"
 
 # ALIASES
-python "$HOME/scripts/generateShortcuts.py"
+python3 "$HOME/scripts/generateShortcuts.py"
 source "$CONFIG_FOLDER/aliases.sh"
 source "$CONFIG_FOLDER/shortcuts.sh"
 #PRIVATE CONFIGS AND KEYS
@@ -39,7 +39,7 @@ prompt_command() {
   if [[ $($STAT_CMD "$CONFIG_FOLDER/nav_folders.json") -gt $_nav_folders_timestamp || $($STAT_CMD "$CONFIG_FOLDER/nav_config.json") -gt $_nav_config_timestamp ]];
   then
     printf "Updating Folder Key Jumps\n"
-    python "$HOME/scripts/generateShortcuts.py"
+    python3 "$HOME/scripts/generateShortcuts.py"
     source "$CONFIG_FOLDER/shortcuts.sh"
 
     _nav_folders_timestamp=$($STAT_CMD "$CONFIG_FOLDER/nav_folders.json")
@@ -48,3 +48,6 @@ prompt_command() {
 }
 
 PROMPT_COMMAND='prompt_command'
+export PATH=/usr/local/texlive/2025/bin/universal-darwin:$PATH
+export PATH="/Users/emien/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/Users/emien/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
