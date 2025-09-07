@@ -19,7 +19,7 @@ return {
                     -- per_filetype = {
                     --     codecompanion = { "codecompanion" },
                     -- },
-                    default = { "lazydev", "laravel", "lsp", "path", "snippets", "buffer" },
+                    default = { "lazydev", "laravel", "lsp", "path", "snippets" },
                     providers = {
                         lazydev = {
                           name = "LazyDev",

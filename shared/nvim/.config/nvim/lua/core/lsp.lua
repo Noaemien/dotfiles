@@ -9,7 +9,15 @@ vim.lsp.config('*', {
   root_markers = { '.git' },
 })
 
-vim.lsp.enable({ 'lua_ls', 'pyright', 'ruff', 'intelephense' }) --
+vim.lsp.enable({
+  'ts_ls',
+  'lua_ls',
+  'pyright',
+  'ruff',
+  'intelephense',
+  'duster',
+  -- 'tailwindcss',
+})
 
 vim.cmd("set completeopt+=noselect")
 
