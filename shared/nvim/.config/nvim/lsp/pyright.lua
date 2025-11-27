@@ -2,6 +2,8 @@ return {
   cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
   root_markers = {
+    "main.py",
+    "pyproject.toml",
     "setup.py",
     "requirements.txt",
   },
