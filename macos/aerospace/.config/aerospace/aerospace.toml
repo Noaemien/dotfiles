@@ -75,6 +75,9 @@ automatically-unhide-macos-hidden-apps = false
 [[on-window-detected]]
     if.app-id = 'app.zen-browser.zen'
     run = 'move-node-to-workspace 2' 
+[[on-window-detected]]
+   if.app-id = 'md.obsidian'
+   run = 'layout floating'  # or something that changes mode
 # [[on-window-detected]]
 #     run = 'move-node-to-workspace 3' 
 
@@ -165,6 +168,8 @@ automatically-unhide-macos-hidden-apps = false
     alt-w = "close"
     alt-enter = "exec-and-forget open -na ghostty --args -e tmux new -As emien"
     alt-space = 'exec-and-forget ~/scripts/dmenu_open_app'
+    alt-g = ['workspace 1', 'exec-and-forget bash ~/.claude/scripts/jump-to-claude.sh']
+    alt-c = ['workspace 1', 'exec-and-forget tmux display-popup -E "bash -lc \"$HOME/scripts/fzf_claude --inline\""']
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

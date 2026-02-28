@@ -1,0 +1,123 @@
+#!/opt/homebrew/bin/bash
+
+INLINE=false
+[[ "$1" == "--inline" ]] && INLINE=true
+
+# Find all tmux panes running claude and jump to one via fzf
+
+IDLE_FILE="/tmp/claude-idle-panes"
+
+# Load attention pane IDs into an associative array
+declare -A attention_panes
+if [[ -f "$IDLE_FILE" ]]; then
+  while IFS= read -r pane_id; do
+    [[ -n "$pane_id" ]] && attention_panes["$pane_id"]=1
+  done < "$IDLE_FILE"
+fi
+
+list_local_panes() {
+  tmux list-panes -a -F "#{pane_id} #{session_name}:#{window_index}.#{pane_index} #{pane_pid} #{pane_current_path}" 2>/dev/null | while read -r pane_id pane pid path; do
+    # Check if claude is running in this pane (direct child or descendant)
+    if pgrep -P "$pid" -f "claude" >/dev/null 2>&1; then
+      if [[ -n "${attention_panes[$pane_id]}" ]]; then
+        printf -- "* [local]  %-30s %s\n" "$pane" "$path"
+      else
+        printf -- "- [local]  %-30s %s\n" "$pane" "$path"
+      fi
+    fi
+  done
+}
+
+list_remote_panes() {
+  # Read remote hosts from ~/.claude_remote_hosts (one host per line, # for comments)
+  local hosts_file="${HOME}/.claude_remote_hosts"
+  [[ -f "$hosts_file" ]] || return
+
+  local pids=()
+  while IFS= read -r host; do
+    [[ -z "$host" || "$host" == \#* ]] && continue
+    (
+      ssh -o ConnectTimeout=3 -o BatchMode=yes "$host" \
+        'tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index} #{pane_pid} #{pane_current_path}" 2>/dev/null | while read -r pane pid path; do
+          if pgrep -P "$pid" -f "claude" >/dev/null 2>&1; then
+            echo "$pane $path"
+          fi
+        done' 2>/dev/null | while read -r pane path; do
+        printf -- "- [%s]  %-30s %s\n" "$host" "$pane" "$path"
+      done
+    ) &
+    pids+=($!)
+  done < "$hosts_file"
+
+  wait "${pids[@]}" 2>/dev/null
+}
+
+fzf_opts=(--no-sort --prompt="claude > ")
+[[ "$INLINE" == false ]] && fzf_opts+=(--tmux)
+
+selected=$(
+  {
+    list_local_panes | sort -rsk1,1
+    list_remote_panes
+  } | fzf "${fzf_opts[@]}"
+)
+
+if [[ -z "$selected" ]]; then
+  exit 0
+fi
+
+# Parse selection
+host=$(echo "$selected" | awk '{print $2}' | tr -d '[]')
+target=$(echo "$selected" | awk '{print $3}')
+session=$(echo "$target" | cut -d: -f1)
+window_pane=$(echo "$target" | cut -d: -f2)
+
+# Remove this pane from idle file if it was an attention pane
+if [[ "${selected:0:1}" == "*" && -f "$IDLE_FILE" ]]; then
+  # Find the pane_id for this target
+  matched_pane_id=$(tmux list-panes -a -F "#{pane_id} #{session_name}:#{window_index}.#{pane_index}" 2>/dev/null | awk -v t="$target" '$2 == t {print $1}')
+  if [[ -n "$matched_pane_id" ]]; then
+    tmpfile=$(mktemp "${IDLE_FILE}.XXXXXX")
+    grep -vxF "$matched_pane_id" "$IDLE_FILE" > "$tmpfile" && mv "$tmpfile" "$IDLE_FILE" || rm -f "$tmpfile"
+  fi
+fi
+
+if [[ "$host" == "local" ]]; then
+  if [[ -n "$TMUX" ]]; then
+    tmux switch-client -t "$session"
+    tmux select-window -t "$session:${window_pane%%.*}"
+    tmux select-pane -t "$target"
+  else
+    tmux attach-session -t "$session"
+  fi
+else
+  # Validate session name to prevent command injection
+  if [[ ! "$session" =~ ^[a-zA-Z0-9_.-]+$ ]]; then
+    echo "Invalid session name: $session"
+    exit 1
+  fi
+
+  # Check if a local pane already has an SSH session to this host
+  existing_pane=""
+  while read -r pane pid _; do
+    if pgrep -P "$pid" -f "ssh.*$host" >/dev/null 2>&1; then
+      existing_pane="$pane"
+      break
+    fi
+  done < <(tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index} #{pane_pid} #{pane_current_path}" 2>/dev/null)
+
+  if [[ -n "$existing_pane" ]]; then
+    # Jump to the existing SSH pane
+    local_session=$(echo "$existing_pane" | cut -d: -f1)
+    local_window_pane=$(echo "$existing_pane" | cut -d: -f2)
+    if [[ -n "$TMUX" ]]; then
+      tmux switch-client -t "$local_session"
+      tmux select-window -t "$local_session:${local_window_pane%%.*}"
+      tmux select-pane -t "$existing_pane"
+    else
+      tmux attach-session -t "$local_session"
+    fi
+  else
+    ssh -t "$host" "tmux attach-session -t '$session'"
+  fi
+fi
