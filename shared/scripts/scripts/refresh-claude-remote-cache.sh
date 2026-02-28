@@ -1,13 +1,14 @@
 #!/bin/bash
 # Refreshes the cache of remote tmux panes running claude.
-# Intended to be run periodically via launchd.
+# Run periodically via launchd (every 5 min).
 
 CACHE_FILE="/tmp/claude-remote-panes-cache"
 HOSTS_FILE="${HOME}/.claude_remote_hosts"
 
 [[ -f "$HOSTS_FILE" ]] || exit 0
 
-tmpfile=$(mktemp "${CACHE_FILE}.XXXXXX")
+tmpdir=$(mktemp -d "${CACHE_FILE}.d.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT
 
 pids=()
 while IFS= read -r host; do
@@ -20,10 +21,11 @@ while IFS= read -r host; do
         fi
       done' 2>/dev/null | while read -r pane path; do
       printf -- "- [%s]  %-30s %s\n" "$host" "$pane" "$path"
-    done >> "$tmpfile"
+    done > "${tmpdir}/${host//\//_}"
   ) &
   pids+=($!)
 done < "$HOSTS_FILE"
 
 wait "${pids[@]}" 2>/dev/null
-mv "$tmpfile" "$CACHE_FILE"
+cat "$tmpdir"/* > "${CACHE_FILE}.new" 2>/dev/null
+mv "${CACHE_FILE}.new" "$CACHE_FILE"
