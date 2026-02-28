@@ -29,27 +29,8 @@ list_local_panes() {
 }
 
 list_remote_panes() {
-  # Read remote hosts from ~/.claude_remote_hosts (one host per line, # for comments)
-  local hosts_file="${HOME}/.claude_remote_hosts"
-  [[ -f "$hosts_file" ]] || return
-
-  local pids=()
-  while IFS= read -r host; do
-    [[ -z "$host" || "$host" == \#* ]] && continue
-    (
-      ssh -o ConnectTimeout=3 -o BatchMode=yes "$host" \
-        'tmux list-panes -a -F "#{session_name}:#{window_index}.#{pane_index} #{pane_pid} #{pane_current_path}" 2>/dev/null | while read -r pane pid path; do
-          if pgrep -P "$pid" -f "claude" >/dev/null 2>&1; then
-            echo "$pane $path"
-          fi
-        done' 2>/dev/null | while read -r pane path; do
-        printf -- "- [%s]  %-30s %s\n" "$host" "$pane" "$path"
-      done
-    ) &
-    pids+=($!)
-  done < "$hosts_file"
-
-  wait "${pids[@]}" 2>/dev/null
+  local cache="/tmp/claude-remote-panes-cache"
+  [[ -f "$cache" ]] && cat "$cache"
 }
 
 fzf_opts=(--no-sort --prompt="claude > ")
