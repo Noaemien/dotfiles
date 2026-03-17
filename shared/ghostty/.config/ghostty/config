@@ -1,41 +1,41 @@
 custom-shader = ~/.config/ghostty/shaders/crt.glsl
 custom-shader-animation = true
 
-background = #0a0a0a
-foreground = #b0b0b0
+background = #101010
+foreground = #c0c0c0
 cursor-color = #5f9fd4
 cursor-text = #0a0a0a
 selection-background = #1e3a5f
 selection-foreground = #d0d0d0
 
 # Black
-palette = 0=#1a1a1a
-palette = 8=#4a4a4a
+palette = 0=#1e1e1e
+palette = 8=#555555
 
 # Red (muted)
-palette = 1=#a06060
-palette = 9=#c07070
+palette = 1=#b06868
+palette = 9=#d07878
 
 # Green (muted)
-palette = 2=#608060
-palette = 10=#70a070
+palette = 2=#689068
+palette = 10=#80b080
 
 # Yellow (muted)
-palette = 3=#908060
-palette = 11=#b0a070
+palette = 3=#a09068
+palette = 11=#c0b078
 
 # Blue (accent)
 palette = 4=#5f9fd4
 palette = 12=#7ab4e8
 
 # Magenta (desaturated blue-ish)
-palette = 5=#7080a0
-palette = 13=#8898b8
+palette = 5=#7888b0
+palette = 13=#90a0c8
 
 # Cyan (steel)
-palette = 6=#6090a0
-palette = 14=#70a8b8
+palette = 6=#6898b0
+palette = 14=#80b8c8
 
 # White
-palette = 7=#b0b0b0
-palette = 15=#d8d8d8
+palette = 7=#c0c0c0
+palette = 15=#e0e0e0
